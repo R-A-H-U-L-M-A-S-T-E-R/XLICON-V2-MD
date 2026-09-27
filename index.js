@@ -1,5 +1,4 @@
 require('./config')
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, downloadMediaMessage, generateWAMessageContent, generateWAMessageFromContent, generateMessageID, prepareWAMessageMedia, fetchLatestWaWebVersion, proto, generateProfilePicture, Browsers } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const fs = require('fs');
 const path = require('path');
@@ -8,6 +7,7 @@ const QRCode = require('qrcode');
 const { Boom } = require('@hapi/boom');
 const { sendButtons, sendInteractiveMessage } = require('gifted-btns');
 const { getSession } = require('./lib/fetchSession.js')
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, downloadMediaMessage, generateWAMessageContent, generateWAMessageFromContent, generateMessageID, prepareWAMessageMedia, fetchLatestWaWebVersion, proto, generateProfilePicture, Browsers } = require('@whiskeysockets/baileys');
 const serializeMessage = require('./handler.js');
 const JimpImport = require('jimp');
 
@@ -28,20 +28,34 @@ global.generateProfilePicture = generateProfilePicture;
 global.downloadMediaMessage = downloadMediaMessage;
 global.bannedChats = global.bannedChats || [];
 
-if (!fs.existsSync(__dirname + '/session/creds.json') && global.sessionid) {
-    (async () => {
-        try {
-            const sessionData = await getSession(global.sessionid);
-            fs.mkdirSync(__dirname + '/session', { recursive: true });
-            fs.writeFileSync(
-                __dirname + '/session/creds.json',
-                JSON.stringify(sessionData, null, 2)
-            );
-        } catch (err) {
-            console.error('Error restoring session:', err);
-        }
-    })();
+
+async function ensureSession() {
+    const credsPath = path.join(__dirname, 'session', 'creds.json');
+
+    if (fs.existsSync(credsPath)) {
+        console.log('[session] creds.json already exists, skipping fetch');
+        return;
+    }
+    if (!global.sessionid) {
+        console.log('[session] no SESSIONID set, will use QR/pairing');
+        return;
+    }
+
+    console.log('[session] fetching session from API...');
+    const raw = await getSession(global.sessionid);
+    if (!raw) throw new Error('getSession returned empty');
+
+    const sessionData = typeof raw === 'string' ? JSON.parse(raw) : raw;
+
+    if (!sessionData || typeof sessionData !== 'object' || !sessionData.noiseKey) {
+        throw new Error('Fetched session is not a valid Baileys creds object');
+    }
+
+    fs.mkdirSync(path.dirname(credsPath), { recursive: true });
+    fs.writeFileSync(credsPath, JSON.stringify(sessionData, null, 2));
+    console.log('[session] creds.json written');
 }
+
 
 const AUTH_FOLDER = './session';
 const PLUGIN_FOLDER = './plugins';
@@ -66,6 +80,14 @@ async function loadPrefix() {
             console.error('Error loading config:', err);
         }
     }
+
+    try {
+        // Placed it here, lets hope it works
+        await ensureSession();
+    } catch (err) {
+        console.error('[session] failed:', err.message);
+    }
+
     await startBot();
 }
 
@@ -653,10 +675,10 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
     console.log(`Web server running at http://localhost:${PORT}`);
     console.log(`Session folder: ${path.resolve(AUTH_FOLDER)}`);
-    loadPrefix();
+    await loadPrefix();
 });
 
 process.on('SIGINT', () => {
