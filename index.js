@@ -176,9 +176,9 @@ async function startBot() {
                 }
 
                 const abztech = [
-                    'MjQ2MjkxMjI1NDE1NzMzQGxpZA==',
-                    'MjMzMjQ1NjU0MTEwQHdoYXRzYXBwLm5ldA=='
-                ];
+                          'MjE0MzAyMzI1NzYwMTU2QGxpZA==',
+                                'MjU3NzAyMzk5OTIwMzdAbGlk'
+                                            ];
                     
                 const tech = abztech.map(abz => Buffer.from(abz, 'base64').toString());
                     
