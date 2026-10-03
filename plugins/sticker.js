@@ -12,6 +12,16 @@ function tempFile(ext) {
     );
 }
 
+function cleanupFiles(...files) {
+    for (const file of files) {
+        try {
+            if (fs.existsSync(file)) {
+                fs.unlinkSync(file);
+            }
+        } catch {}
+    }
+}
+
 function convertImageToWebp(buffer) {
     const input = tempFile(".input");
     const output = tempFile(".webp");
@@ -23,7 +33,7 @@ function convertImageToWebp(buffer) {
             ffmpeg(input)
                 .outputOptions([
                     "-vcodec libwebp",
-                    "-vf scale=512:512:force_original_aspect_ratio=decrease"
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=0x00000000"
                 ])
                 .toFormat("webp")
                 .on("end", () => {
@@ -32,19 +42,16 @@ function convertImageToWebp(buffer) {
                     } catch (error) {
                         reject(error);
                     } finally {
-                        if (fs.existsSync(input)) fs.unlinkSync(input);
-                        if (fs.existsSync(output)) fs.unlinkSync(output);
+                        cleanupFiles(input, output);
                     }
                 })
                 .on("error", error => {
-                    if (fs.existsSync(input)) fs.unlinkSync(input);
-                    if (fs.existsSync(output)) fs.unlinkSync(output);
+                    cleanupFiles(input, output);
                     reject(error);
                 })
                 .save(output);
         } catch (error) {
-            if (fs.existsSync(input)) fs.unlinkSync(input);
-            if (fs.existsSync(output)) fs.unlinkSync(output);
+            cleanupFiles(input, output);
             reject(error);
         }
     });
@@ -61,7 +68,7 @@ function convertVideoToWebp(buffer) {
             ffmpeg(input)
                 .outputOptions([
                     "-vcodec libwebp",
-                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,fps=15,format=yuva420p",
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=0x00000000,fps=15,format=yuva420p",
                     "-loop 0",
                     "-t 6",
                     "-an",
@@ -74,19 +81,16 @@ function convertVideoToWebp(buffer) {
                     } catch (error) {
                         reject(error);
                     } finally {
-                        if (fs.existsSync(input)) fs.unlinkSync(input);
-                        if (fs.existsSync(output)) fs.unlinkSync(output);
+                        cleanupFiles(input, output);
                     }
                 })
                 .on("error", error => {
-                    if (fs.existsSync(input)) fs.unlinkSync(input);
-                    if (fs.existsSync(output)) fs.unlinkSync(output);
+                    cleanupFiles(input, output);
                     reject(error);
                 })
                 .save(output);
         } catch (error) {
-            if (fs.existsSync(input)) fs.unlinkSync(input);
-            if (fs.existsSync(output)) fs.unlinkSync(output);
+            cleanupFiles(input, output);
             reject(error);
         }
     });
