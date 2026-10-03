@@ -101,7 +101,21 @@ module.exports = {
 
     async execute(sock, m, args) {
         try {
+            await sock.sendMessage(m.from, {
+                react: {
+                    text: "⏳",
+                    key: m.key
+                }
+            });
+
             if (!m.quoted) {
+                await sock.sendMessage(m.from, {
+                    react: {
+                        text: "❌",
+                        key: m.key
+                    }
+                });
+
                 return m.reply(
                     "Usage: Reply to an image or video with .sticker\n\nExample: Reply to a photo or video and type .sticker"
                 );
@@ -118,6 +132,13 @@ module.exports = {
             const isVideo = mimeType.includes("video");
 
             if (!isImage && !isVideo) {
+                await sock.sendMessage(m.from, {
+                    react: {
+                        text: "❌",
+                        key: m.key
+                    }
+                });
+
                 return m.reply(
                     "Please reply to an image or video to convert it to a sticker!"
                 );
@@ -126,6 +147,13 @@ module.exports = {
             const buffer = await m.quoted.download();
 
             if (!buffer || buffer.length === 0) {
+                await sock.sendMessage(m.from, {
+                    react: {
+                        text: "❌",
+                        key: m.key
+                    }
+                });
+
                 return m.reply("Failed to download media!");
             }
 
@@ -138,6 +166,13 @@ module.exports = {
             }
 
             if (!webpBuffer || webpBuffer.length === 0) {
+                await sock.sendMessage(m.from, {
+                    react: {
+                        text: "❌",
+                        key: m.key
+                    }
+                });
+
                 return m.reply("Failed to convert media to WebP!");
             }
 
@@ -185,8 +220,25 @@ module.exports = {
             await sock.sendMessage(m.from, {
                 sticker: stickerWithMetadata || webpBuffer
             });
+
+            await sock.sendMessage(m.from, {
+                react: {
+                    text: "✅",
+                    key: m.key
+                }
+            });
         } catch (err) {
             console.error("Sticker Creation Error:", err);
+
+            try {
+                await sock.sendMessage(m.from, {
+                    react: {
+                        text: "❌",
+                        key: m.key
+                    }
+                });
+            } catch {}
+
             await m.reply(
                 "Failed to create sticker. Error: " + err.message
             );
