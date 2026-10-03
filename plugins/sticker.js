@@ -1,9 +1,100 @@
-const sharp = require("sharp");
+const fs = require("fs");
+const { tmpdir } = require("os");
+const path = require("path");
+const Crypto = require("crypto");
+const ffmpeg = require("fluent-ffmpeg");
 const { addStickerMetadata } = require("../lib/sticker");
+
+function tempFile(ext) {
+    return path.join(
+        tmpdir(),
+        `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}${ext}`
+    );
+}
+
+function convertImageToWebp(buffer) {
+    const input = tempFile(".input");
+    const output = tempFile(".webp");
+
+    return new Promise((resolve, reject) => {
+        try {
+            fs.writeFileSync(input, buffer);
+
+            ffmpeg(input)
+                .outputOptions([
+                    "-vcodec libwebp",
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease,pad=512:512:-1:-1:color=black@0"
+                ])
+                .toFormat("webp")
+                .on("end", () => {
+                    try {
+                        resolve(fs.readFileSync(output));
+                    } catch (error) {
+                        reject(error);
+                    } finally {
+                        if (fs.existsSync(input)) fs.unlinkSync(input);
+                        if (fs.existsSync(output)) fs.unlinkSync(output);
+                    }
+                })
+                .on("error", error => {
+                    if (fs.existsSync(input)) fs.unlinkSync(input);
+                    if (fs.existsSync(output)) fs.unlinkSync(output);
+                    reject(error);
+                })
+                .save(output);
+        } catch (error) {
+            if (fs.existsSync(input)) fs.unlinkSync(input);
+            if (fs.existsSync(output)) fs.unlinkSync(output);
+            reject(error);
+        }
+    });
+}
+
+function convertVideoToWebp(buffer) {
+    const input = tempFile(".mp4");
+    const output = tempFile(".webp");
+
+    return new Promise((resolve, reject) => {
+        try {
+            fs.writeFileSync(input, buffer);
+
+            ffmpeg(input)
+                .outputOptions([
+                    "-vcodec libwebp",
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease,fps=15,pad=512:512:-1:-1:color=black",
+                    "-loop 0",
+                    "-t 6",
+                    "-an",
+                    "-vsync 0"
+                ])
+                .toFormat("webp")
+                .on("end", () => {
+                    try {
+                        resolve(fs.readFileSync(output));
+                    } catch (error) {
+                        reject(error);
+                    } finally {
+                        if (fs.existsSync(input)) fs.unlinkSync(input);
+                        if (fs.existsSync(output)) fs.unlinkSync(output);
+                    }
+                })
+                .on("error", error => {
+                    if (fs.existsSync(input)) fs.unlinkSync(input);
+                    if (fs.existsSync(output)) fs.unlinkSync(output);
+                    reject(error);
+                })
+                .save(output);
+        } catch (error) {
+            if (fs.existsSync(input)) fs.unlinkSync(input);
+            if (fs.existsSync(output)) fs.unlinkSync(output);
+            reject(error);
+        }
+    });
+}
 
 module.exports = {
     name: "sticker",
-    description: "Convert image to sticker with metadata",
+    description: "Convert image or video to sticker with metadata",
     aliases: ["s", "stiker", "sticker"],
     tags: ["convert", "sticker", "tools"],
     command: /^\.?(sticker|stiker|s)/i,
@@ -12,7 +103,7 @@ module.exports = {
         try {
             if (!m.quoted) {
                 return m.reply(
-                    "Usage: Reply to an image with .sticker\n\nExample: Reply to a photo and type .sticker"
+                    "Usage: Reply to an image or video with .sticker\n\nExample: Reply to a photo or video and type .sticker"
                 );
             }
 
@@ -23,33 +114,29 @@ module.exports = {
                 ""
             ).toLowerCase();
 
-            if (!mimeType.includes("image")) {
-                return m.reply("Please reply to an image to convert it to sticker!");
+            const isImage = mimeType.includes("image");
+            const isVideo = mimeType.includes("video");
+
+            if (!isImage && !isVideo) {
+                return m.reply("Please reply to an image or video to convert it to a sticker!");
             }
 
             const buffer = await m.quoted.download();
 
             if (!buffer || buffer.length === 0) {
-                return m.reply("Failed to download image!");
+                return m.reply("Failed to download media!");
             }
 
-            const webpBuffer = await sharp(buffer)
-                .resize(512, 512, {
-                    fit: "contain",
-                    background: {
-                        r: 0,
-                        g: 0,
-                        b: 0,
-                        alpha: 0
-                    }
-                })
-                .webp({
-                    quality: 80
-                })
-                .toBuffer();
+            let webpBuffer;
+
+            if (isVideo) {
+                webpBuffer = await convertVideoToWebp(buffer);
+            } else {
+                webpBuffer = await convertImageToWebp(buffer);
+            }
 
             if (!webpBuffer || webpBuffer.length === 0) {
-                return m.reply("Failed to convert image to WebP!");
+                return m.reply("Failed to convert media to WebP!");
             }
 
             let packname = "XLICON V2";
