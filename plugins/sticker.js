@@ -23,7 +23,7 @@ function convertImageToWebp(buffer) {
             ffmpeg(input)
                 .outputOptions([
                     "-vcodec libwebp",
-                    "-vf scale=512:512:force_original_aspect_ratio=decrease,pad=512:512:-1:-1:color=black@0"
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease"
                 ])
                 .toFormat("webp")
                 .on("end", () => {
@@ -61,7 +61,7 @@ function convertVideoToWebp(buffer) {
             ffmpeg(input)
                 .outputOptions([
                     "-vcodec libwebp",
-                    "-vf scale=512:512:force_original_aspect_ratio=decrease,fps=15,pad=512:512:-1:-1:color=black",
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,fps=15,format=yuva420p",
                     "-loop 0",
                     "-t 6",
                     "-an",
@@ -118,7 +118,9 @@ module.exports = {
             const isVideo = mimeType.includes("video");
 
             if (!isImage && !isVideo) {
-                return m.reply("Please reply to an image or video to convert it to a sticker!");
+                return m.reply(
+                    "Please reply to an image or video to convert it to a sticker!"
+                );
             }
 
             const buffer = await m.quoted.download();
@@ -183,7 +185,6 @@ module.exports = {
             await sock.sendMessage(m.from, {
                 sticker: stickerWithMetadata || webpBuffer
             });
-
         } catch (err) {
             console.error("Sticker Creation Error:", err);
             await m.reply(
