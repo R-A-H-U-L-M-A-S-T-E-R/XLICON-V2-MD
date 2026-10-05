@@ -33,7 +33,10 @@ function convertImageToWebp(buffer) {
             ffmpeg(input)
                 .outputOptions([
                     "-vcodec libwebp",
-                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=0x00000000"
+                    "-pix_fmt yuva420p",
+                    "-lossless 0",
+                    "-compression_level 6",
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=black@0,format=yuva420p"
                 ])
                 .toFormat("webp")
                 .on("end", () => {
@@ -68,11 +71,13 @@ function convertVideoToWebp(buffer) {
             ffmpeg(input)
                 .outputOptions([
                     "-vcodec libwebp",
-                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=0x00000000,fps=15,format=yuva420p",
+                    "-pix_fmt yuva420p",
                     "-loop 0",
                     "-t 6",
                     "-an",
-                    "-vsync 0"
+                    "-vsync 0",
+                    "-compression_level 6",
+                    "-vf scale=512:512:force_original_aspect_ratio=decrease:flags=lanczos,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=black@0,fps=15,format=yuva420p"
                 ])
                 .toFormat("webp")
                 .on("end", () => {
