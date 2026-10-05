@@ -2,8 +2,37 @@ const fs = require("fs");
 const { tmpdir } = require("os");
 const path = require("path");
 const Crypto = require("crypto");
+const { execFileSync } = require("child_process");
 const ffmpeg = require("fluent-ffmpeg");
 const { addStickerMetadata } = require("../lib/sticker");
+
+function ensureFFmpeg() {
+    const isTermux = fs.existsSync(
+        "/data/data/com.termux/files/usr/bin/termux-info"
+    );
+
+    if (!isTermux) {
+        return;
+    }
+
+    try {
+        execFileSync("ffmpeg", ["-version"], {
+            stdio: "ignore"
+        });
+    } catch {
+        try {
+            console.log("Termux detected. Installing FFmpeg...");
+            execFileSync("pkg", ["install", "-y", "ffmpeg"], {
+                stdio: "inherit"
+            });
+            console.log("FFmpeg installation completed.");
+        } catch (error) {
+            console.error("FFmpeg installation failed:", error);
+        }
+    }
+}
+
+ensureFFmpeg();
 
 function tempFile(ext) {
     return path.join(
