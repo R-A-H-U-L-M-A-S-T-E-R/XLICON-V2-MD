@@ -62,7 +62,7 @@ async execute(sock, m, args) {
                 buttonsMessage: {
                     text: `🎬 *${title}*\n\nChoose a format to download:`,
                     contentText: `🎬 *${title}*\n\nChoose a format to download:`,
-                    footerText: '「 𝙏𝙞𝙢𝙚 - 𝙏𝙞𝙢𝙚𝙡𝙚𝙨𝙨 」',
+                    footerText: '「 ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʀᴀʜᴜʟ ᴍᴀꜱᴛᴇʀ 」',
                     locationMessage: {
                         name: title,
                         address: "YouTube Download",
@@ -71,12 +71,12 @@ async execute(sock, m, args) {
                     buttons: [
                         {
                             buttonId: `${prefix}ytmp3 ${finalUrl}`,
-                            buttonText: { displayText: 'MP3' },
+                            buttonText: { displayText: 'RAHUL AI 1 MP3' },
                             type: 1
                         },
                         {
                             buttonId: `${prefix}ymp4 ${finalUrl}`,
-                            buttonText: { displayText: 'MP4' },
+                            buttonText: { displayText: 'RAHUL AI-2 MP4' },
                             type: 1
                         }
                     ],
