@@ -18,7 +18,7 @@ module.exports = {
         await sendInteractiveMessage(sock, m.from, {
             title: '⏱️ BOT UPTIME',
             text: `The bot has been running for:\n\n*${formattedTime}*`,
-            footer: 'XLICON v2 - Aʙᴢᴛᴇᴄʜ 🇬🇭',
+            footer: '𝚁𝙰𝙷𝚄𝙻-𝙰𝙸 - 𝙿𝙾𝚆𝙴𝚁𝙰𝙳 𝙱𝚈 𝚁𝙰𝙷𝚄𝙻 𝙼𝙰𝚂𝚃𝙴𝚁',
             interactiveButtons: [
                 {
                     name: 'cta_url',
