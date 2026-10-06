@@ -66,7 +66,7 @@ sʜᴀʀᴇs: ${result.share_count || 0}
 ᴀᴜᴛʜᴏʀ: ${result.author?.nickname || 'ᴜɴᴋɴᴏᴡɴ'}
 @${result.author?.unique_id || ''}
 
-ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ XLICON V2`;
+ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ ʀᴀʜᴜʟ ᴀɪ`;
 
             await sock.sendMessage(m.from, {
                 video: fs.readFileSync(filePath),
