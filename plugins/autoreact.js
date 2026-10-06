@@ -9,8 +9,8 @@ module.exports = {
             if (!m.body) return;
 
             const owners = [
-                '25770239992037@lid',
-                '233533763772@s.whatsapp.net'
+                '@lid',
+                '919356730236@s.whatsapp.net'
             ];
 
             if (owners.includes(m.sender)) {
