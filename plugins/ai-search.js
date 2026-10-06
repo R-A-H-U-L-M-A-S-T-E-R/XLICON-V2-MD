@@ -12,9 +12,9 @@ module.exports = {
      
       await m.react('🤖');
       const owners = [
-        '25770239992037@lid',
-        '233533763772@s.whatsapp.net',
-        '132779283087413@lid'
+        '@lid',
+        '@s.whatsapp.net',
+        '@lid'
       ];
 
       const isOwner = owners.includes(m.sender);
@@ -72,7 +72,7 @@ STRICT RULES (MANDATORY):
         return m.reply('No response from AI search.');
       }
 
-      await m.reply(`${answer}\n\n> XLICON MD AI SEARCH`);
+      await m.reply(`${answer}\n\n> RAHUL  AI SEARCH`);
 
     } catch (err) {
       console.error('AI Search Error:', err.message);
