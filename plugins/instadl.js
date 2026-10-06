@@ -50,7 +50,7 @@ module.exports = {
                            `❤️ *ʟɪᴋᴇs:* ${metadata.like}\n` +
                            `💬 *ᴄᴏᴍᴍᴇɴᴛs:* ${metadata.comment}\n` +
                            `📝 *ᴄᴀᴘᴛɪᴏɴ:* ${metadata.caption || 'No caption'}\n\n` +
-                           `> ᴘᴏᴡᴇʀᴇᴅ ʙʏ sᴀᴍᴜᴇʟ-ʀᴇʙɪx`;
+                           `> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʀᴀʜᴜʟ ᴍᴀꜱᴛᴇʀ`;
             
             if (metadata.isVideo) {
                 await m.reply(buffer, { 
