@@ -27,12 +27,12 @@ module.exports = {
             timeZone: 'Africa/Accra'
         });
 
-        const botOwner = global.ownerName || 'ABZTECH';
+        const botOwner = global.ownerName || '𝚁𝙰𝙷𝚄𝙻-𝙼𝙰𝚂𝚃𝙴𝚁';
         const user = m.pushName || m.sender?.split('@')[0] || 'User';
-        const Founder = 'ahmmikun';
+        const Founder = '𝚁𝙰𝙷𝚄𝙻-𝙼𝙰𝚂𝚃𝙴𝚁';
 
         const menuText = `
-┌─ム xʟɪᴄᴏɴ ᴍᴜʟᴛɪᴅᴇᴠɪᴄᴇ
+┌─ム 𝚁𝙰𝙷𝚄𝙻-𝙰𝙸 ᴍᴜʟᴛɪᴅᴇᴠɪᴄᴇ
 │ *ғᴏᴜɴᴅᴇʀ:* ${Founder}
 │ *ᴏᴡɴᴇʀ:* ${botOwner}
 │ *ᴜsᴇʀ:* ${user}
@@ -112,7 +112,7 @@ module.exports = {
 │
 ╰─────────◆────────╯
 
-> 「 𝙏𝙞𝙢𝙚 - 𝙏𝙞𝙢𝙚𝙡𝙚𝙨𝙨 」
+> 「 ᴩᴏᴡᴇʀᴇᴀᴅ - ʙʏ ʀᴀʜᴜʟ ᴍᴀꜱᴛᴇʀ 」
 `.trim();
 
         try {
