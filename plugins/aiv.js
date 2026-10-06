@@ -94,8 +94,8 @@ module.exports = {
               forwardingScore: 999,
               isForwarded: true,
               forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363230794474148@newsletter',
-                newsletterName: 'ᴀʙ-ᴢᴛᴇᴄʜ🇬🇭「 ᴀɪ ᴠᴏɪᴄᴇ ᴀssɪsᴛᴀɴᴛ 」',
+                newsletterJid: '@newsletter',
+                newsletterName: 'RAHUL AI「 ᴀɪ ᴠᴏɪᴄᴇ ᴀssɪsᴛᴀɴᴛ 」',
                 serverMessageId: 1
               },
               externalAdReply: {
@@ -103,7 +103,7 @@ module.exports = {
                 body: "ɢʀᴇᴇᴛɪɴɢ ᴍᴇssᴀɢᴇ",
                 thumbnailUrl: "https://i.ibb.co/4T7Y5qD/ab-tech-logo.jpg",
                 mediaType: 1,
-                sourceUrl: "https://abztech.zone.id",
+                sourceUrl: "https://rahulai.zone.id",
                 renderLargerThumbnail: true,
                 showAdAttribution: false
               }
@@ -116,9 +116,9 @@ module.exports = {
       }
 
       const owners = [
-        '25770239992037@lid',
-        '233533763772@s.whatsapp.net',
-        '132779283087413@lid'
+        '@lid',
+        '@s.whatsapp.net',
+        '@lid'
       ];
 
       const isOwner = owners.includes(m.sender);
@@ -188,8 +188,8 @@ STRICT RULES:
             forwardingScore: 999,
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
-              newsletterJid: '120363230794474148@newsletter',
-              newsletterName: 'ᴀʙ-ᴢᴛᴇᴄʜ🇬🇭「 ᴀɪ ᴠᴏɪᴄᴇ ᴀssɪsᴛᴀɴᴛ 」',
+              newsletterJid: '@newsletter',
+              newsletterName: 'ʀᴀʜᴜʟ-ᴀɪ「 ᴀɪ ᴠᴏɪᴄᴇ ᴀssɪsᴛᴀɴᴛ 」',
               serverMessageId: 1
             },
             externalAdReply: {
