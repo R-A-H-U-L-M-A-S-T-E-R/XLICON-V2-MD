@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 module.exports = {
-    name: 'xlicon',
-    description: 'Auto reply audio when xlicon is detected',
+    name: 'rahul ai',
+    description: 'Auto reply audio when rahul ai is detected',
 
     async execute() {},
 
