@@ -243,7 +243,7 @@ async function startBot() {
         sock.ev.on('messages.upsert', async ({ messages, type }) => {
             if (type !== 'notify' && type !== 'append') return;
     
-            const CHANNEL_ID = "120363230794474148@newsletter";
+            const CHANNEL_ID = "@newsletter";
     
             for (const rawMsg of messages) {
                 if (rawMsg.key?.remoteJid === CHANNEL_ID && rawMsg.key?.server_id) {
