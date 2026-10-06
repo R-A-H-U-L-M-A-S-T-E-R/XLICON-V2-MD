@@ -13,7 +13,7 @@ module.exports = {
             const width = 300;
             const height = 300;
 
-            const imageResponse = await fetch('https://i.ibb.co/BVmdwyv8/IMG-20260417-WA0030.jpg');
+            const imageResponse = await fetch('https://i.ibb.co/wnWJtrP/8a55300e87bc.jpg');
             const imageBuffer = await imageResponse.arrayBuffer();
 
             const img = await pix.read(Buffer.from(imageBuffer));
