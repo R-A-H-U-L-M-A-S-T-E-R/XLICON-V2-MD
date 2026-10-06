@@ -10,16 +10,16 @@ module.exports = {
                 {
                     interactiveMessage: {
                         header: {
-                            title: 'XLICON v2 ᴍᴜʟᴛɪᴅᴇᴠɪᴄᴇ'
+                            title: '𝚁𝙰𝙷𝚄𝙻 𝙰𝙸 ᴍᴜʟᴛɪᴅᴇᴠɪᴄᴇ'
                         },
                         body: {
                             text:
                                 `Tap any button below to execute the command instantly:\n\n` +
                                 `Current prefix: *${global.BOT_PREFIX}*\n\n` +
-                                `> 「 𝙏𝙞𝙢𝙚 - 𝙏𝙞𝙢𝙚𝙡𝙚𝙨𝙨 」`
+                                `> 「 ᴩᴏᴡᴇʀᴇᴀᴅ ʙʏ - ʀᴀʜᴜʟ-ᴍᴀꜱᴛᴇʀ 」`
                         },
                         footer: {
-                            text: 'Instant commands • abztech.xyz'
+                            text: 'Instant commands • rahul.xyz'
                         },
                         contextInfo: {
                             stanzaId: m.key.id,
@@ -55,7 +55,7 @@ module.exports = {
                                         display_text: 'More',
                                         sections: [
                                             {
-                                                title: 'XLICON v2',
+                                                title: '𝗥𝗔𝗛𝗨𝗟 𝗔𝗜',
                                                 rows: [
                                                     {
                                                         header: 'Ping',
