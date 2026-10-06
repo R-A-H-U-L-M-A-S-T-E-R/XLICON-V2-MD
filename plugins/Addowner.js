@@ -82,7 +82,7 @@ module.exports = {
         
         if (command === 'add') {
             if (!target) {
-                return m.reply(`Usage: ${global.BOT_PREFIX}owner add @user or 256727256090`);
+                return m.reply(`Usage: ${global.BOT_PREFIX}owner add @user or 919356730236`);
             }
             
             const realJid = await getRealJid(sock, target);
