@@ -39,13 +39,13 @@ module.exports = {
           caption: 'Profile picture',
           contextInfo: {
             forwardedNewsletterMessageInfo: {
-              newsletterJid: '120363230794474148@newsletter',
-              newsletterName: '𝘈𝘉-𝘡𝘛𝘌𝘊𝘏🇬🇭「 𝙏𝙞𝙢𝙚 - 𝙏𝙞𝙢𝙚𝙡𝙚𝙨𝙨 」'
+              newsletterJid: '@newsletter',
+              newsletterName: 'ʀᴀʜᴜʟ-ᴀɪ「 𝙿𝙾𝚆𝙴𝚁𝙰𝙳 𝙱𝚈 𝚁𝙰𝙷𝚄𝙻 𝙼𝙰𝚂𝚃𝙴𝚁 」'
             },
             isForwarded: true,
             externalAdReply: {
-              title: '𝗫𝗟𝗜𝗖𝗢𝗡 𝗩𝟮',
-              body: '𝘗𝘰𝘸𝘦𝘳𝘦𝘥 𝘣𝘺 𝘈𝘣𝘻𝘛𝘦𝘤𝘩',
+              title: 'RAHUL-AI',
+              body: '𝙿𝙾𝚆𝙴𝚁𝙰𝙳 𝙱𝚈 𝚁𝙰𝙷𝚄𝙻 𝙼𝙰𝚂𝚃𝙴𝚁',
               thumbnailUrl: ppUrl,
               mediaType: 1,
               mediaUrl: 'https://abztech.my.id',
