@@ -7,11 +7,11 @@ module.exports = {
 
     async execute(sock, m, args) {
         
-            await m.react('⏱️');
+            await m.react('🚀');
         const start = Date.now();
         const sentMsg = await m.reply('Pinging...');
         const latency = Date.now() - start;
-        const info = `> Latency: ${latency} ms`;
+        const info = `> 𝚁𝙰𝙷𝚄𝙻-𝙰𝙸: ${latency} ms`;
 
         try {
             await sock.sendMessage(m.from, {
@@ -21,7 +21,7 @@ module.exports = {
         } catch (err) {
             console.error('Ping error:', err);
             await sock.sendMessage(m.from, {
-                text: `Latency: ${latency} ms`,
+                text: `𝚁𝙰𝙷𝚄𝙻-𝙰𝙸: ${latency} ms`,
                 edit: sentMsg.key
             });
         }
