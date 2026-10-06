@@ -49,7 +49,7 @@ module.exports = {
 • .textpro cloud HELLO WORLD
 • .textpro pixel | GAMER
 
-ᴘᴏᴡᴇʀᴇᴅ ʙʏ xʟɪᴄᴏɴᴠ2`;
+ 𝙿𝙾𝚆𝙴𝚁𝙰𝙳 𝙱𝚈 𝚁𝙰𝙷𝚄𝙻 𝙼𝙰𝚂𝚃𝙴𝚁`;
                 return await m.reply(stylesList);
             }
 
@@ -66,7 +66,7 @@ module.exports = {
 │ ᪣ ᴛᴇxᴛ: ${text}
 │ ᪣ ꜱᴛʏʟᴇ: ${style}
 │
-│ ᴘᴏᴡᴇʀᴇᴅ ʙʏ xʟɪᴄᴏɴᴠ2
+│ 𝙿𝙾𝚆𝙴𝚁𝙰𝙳 𝙱𝚈 𝚁𝙰𝙷𝚄𝙻 𝙼𝙰𝚂𝚃𝙴𝚁
 ╰─────────◆────────╯`;
 
             await m.reply(imageBuffer, {
@@ -75,8 +75,8 @@ module.exports = {
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363230794474148@newsletter',
-                        newsletterName: '──𝘈𝘉-𝘡𝘛𝘌𝘊𝘏🇬🇭「 𝙏𝙞𝙢𝙚 - 𝙏𝙞𝙢𝙚𝙡𝙚𝙨𝙨 」',
+                        newsletterJid: '@newsletter',
+                        newsletterName: '──ʀᴀʜᴜʟ-ᴀɪ「 𝙿𝙾𝚆𝙴𝚁𝙰𝙳 𝙱𝚈 𝚁𝙰𝙷𝚄𝙻 𝙼𝙰𝚂𝚃𝙴𝚁 」',
                         serverMessageId: 1
                     }
                 }
