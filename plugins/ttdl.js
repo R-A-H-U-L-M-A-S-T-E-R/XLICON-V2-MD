@@ -17,7 +17,7 @@ module.exports = {
             }
 
             const url = args[0];
-            
+
             if (!url.includes('tiktok.com')) {
                 return await m.reply('ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ᴠᴀʟɪᴅ ᴛɪᴋᴛᴏᴋ ᴜʀʟ');
             }
@@ -25,20 +25,23 @@ module.exports = {
             await m.reply('ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏ...');
 
             const apiUrl = `https://api-rebix.zone.id/api/tiktok2?url=${encodeURIComponent(url)}`;
-            
+
             const response = await axios.get(apiUrl);
-            
+
             if (!response.data.status || !response.data.result) {
                 return await m.reply('ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏ\nᴘʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ ʟᴀᴛᴇʀ');
             }
 
             const result = response.data.result;
-            
-            const videoUrl = result.play;
-            
-            if (!videoUrl) {
+
+            const videoData = result.data?.find(item => item.type === 'nowatermark')
+                || result.data?.find(item => item.type === 'nowatermark_hd');
+
+            if (!videoData || !videoData.url) {
                 return await m.reply('ɴᴏ ᴠɪᴅᴇᴏ ᴜʀʟ ғᴏᴜɴᴅ');
             }
+
+            const videoUrl = videoData.url;
 
             const videoResponse = await axios.get(videoUrl, {
                 responseType: 'arraybuffer'
@@ -54,17 +57,20 @@ module.exports = {
 
             fs.writeFileSync(filePath, videoBuffer);
 
+            const stats = result.stats || {};
+            const author = result.author || {};
+
             const caption = `*ᴛɪᴋᴛᴏᴋ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ*
 
 ᴛɪᴛʟᴇ: ${result.title || 'ɴᴏ ᴛɪᴛʟᴇ'}
-ᴅᴜʀᴀᴛɪᴏɴ: ${result.duration}s
-ᴠɪᴇᴡs: ${result.play_count || 0}
-ʟɪᴋᴇs: ${result.digg_count || 0}
-ᴄᴏᴍᴍᴇɴᴛs: ${result.comment_count || 0}
-sʜᴀʀᴇs: ${result.share_count || 0}
+ᴅᴜʀᴀᴛɪᴏɴ: ${result.duration || 'ɴ/ᴀ'}
+ᴠɪᴇᴡs: ${stats.views || 0}
+ʟɪᴋᴇs: ${stats.likes || 0}
+ᴄᴏᴍᴍᴇɴᴛs: ${stats.comment || 0}
+sʜᴀʀᴇs: ${stats.share || 0}
 
-ᴀᴜᴛʜᴏʀ: ${result.author?.nickname || 'ᴜɴᴋɴᴏᴡɴ'}
-@${result.author?.unique_id || ''}
+ᴀᴜᴛʜᴏʀ: ${author.nickname || 'ᴜɴᴋɴᴏᴡɴ'}
+@${author.fullname || ''}
 
 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ XLICON V2`;
 
