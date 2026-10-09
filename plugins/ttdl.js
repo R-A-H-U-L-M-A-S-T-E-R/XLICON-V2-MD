@@ -24,7 +24,7 @@ module.exports = {
 
             await m.reply('ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏ...');
 
-            const apiUrl = `https://api-rebix.zone.id/api/tiktok2?url=${encodeURIComponent(url)}`;
+            const apiUrl = `https://api-rebix.zone.id/api/ttdl?url=${encodeURIComponent(url)}`;
 
             const response = await axios.get(apiUrl);
 
